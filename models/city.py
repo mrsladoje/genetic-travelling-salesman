@@ -5,6 +5,7 @@ class City:
         self.id = id
         self.x = x
         self.y = y
+        
     def distance_to(self, other_city):
         return math.sqrt((self.x-other_city.x)**2 + (self.y-other_city.y)**2)
     
