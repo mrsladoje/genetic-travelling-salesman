@@ -4,7 +4,7 @@ class Route:
     def __init__(self, cities, route = None):
         self.cities = cities
         self.route = route or self.generate_random_route()
-        self.distance = None
+        self.distance = self.calculate_total_distance()
 
     def generate_random_route(self):
         route = list(range(1, len(self.cities) + 1))
