@@ -1,4 +1,7 @@
 from models.route import Route
+from genetic.selection import tournament_selection
+from genetic.mutation import inversion_mutation
+from genetic.crossover import partially_mapped_crossover
 
 class Population:
     def __init__(self, cities, population_size):
@@ -29,3 +32,22 @@ class Population:
 
     def sort_by_distance(self):
         self.routes.sort(key=lambda x: x.distance)
+
+    def evolve(self, mutation_rate=0.1, elite_size=10):
+        new_routes = []
+        
+        self.sort_by_distance()
+        new_routes.extend(self.routes[:elite_size])
+        
+        while len(new_routes) < self.population_size:
+            parent1 = tournament_selection(self)
+            parent2 = tournament_selection(self)
+            
+            child = partially_mapped_crossover(parent1, parent2)
+            child = inversion_mutation(child, mutation_rate)
+            
+            new_routes.append(child)
+        
+        self.routes = new_routes
+        self.generation += 1
+        self.update_statistics()
