@@ -115,7 +115,8 @@ dmypy.json
 .pyre/
 
 # VSCODE IDE
-.vscode
+.vscode/
 
 #Pycharm IDE
 .idea
+.env
