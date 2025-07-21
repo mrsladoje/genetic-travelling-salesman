@@ -18,8 +18,18 @@ def partially_mapped_crossover(parent1, parent2):
     for i in range(len(route1)):
         if child_route[i] == -1:
             candidate = route2[i]
-            while candidate in mapping:
+            
+            visited = set()  # Prevent infinite loops
+            while candidate in mapping and candidate not in visited:
+                visited.add(candidate)
                 candidate = mapping[candidate]
+            
+            if candidate in child_route:
+                for city_id in range(len(route1)):
+                    if city_id not in child_route:
+                        candidate = city_id
+                        break
+            
             child_route[i] = candidate
     
     child = Route(parent1.cities, child_route)
